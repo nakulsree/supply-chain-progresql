@@ -1,0 +1,306 @@
+/* main stylesheet for the whole app */
+
+/* base stuff that applies everywhere */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: lightgray;
+  color: black;
+}
+
+/* header and nav stuff */
+header {
+  background-color: darkgray;
+  color: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid black;
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+}
+
+nav {
+  display: inline-block;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+  padding: 5px 10px;
+}
+
+nav a:hover {
+  background-color: gray;
+}
+
+/* main content area */
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* headings */
+h1 {
+  color: black;
+  margin: 15px 0 10px 0;
+  font-size: 22px;
+}
+
+h2 {
+  color: black;
+  margin: 15px 0 10px 0;
+  font-size: 18px;
+}
+
+h3 {
+  color: black;
+  margin: 10px 0 8px 0;
+  font-size: 16px;
+}
+
+/* text and paragraphs */
+p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* links */
+a {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* form stuff */
+form {
+  margin: 20px 0;
+}
+
+label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  padding: 8px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid black;
+  background-color: lightblue;
+}
+
+button,
+input[type="button"],
+input[type="submit"] {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: lightgray;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: white;
+}
+
+table th {
+  background-color: lightgray;
+  color: black;
+  padding: 10px;
+  border: 1px solid black;
+  text-align: left;
+  font-weight: bold;
+}
+
+table td {
+  padding: 10px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+table tr:nth-child(even) {
+  background-color: white;
+}
+
+table tr:hover {
+  background-color: lightblue;
+}
+
+/* cards and boxes */
+.card {
+  background-color: white;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+section {
+  margin: 20px 0;
+}
+
+/* filter bar styling */
+.filter-bar {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.filter-bar label {
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+/* charts and graphs */
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  margin: 20px 0;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.table-scroll-container {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid black;
+  margin: 20px 0;
+}
+
+.table-scroll-container table thead th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+  border-bottom: 2px solid black;
+}
+
+/* alerts and warnings */
+.alert-strip {
+  padding: 12px 15px;
+  margin: 15px 0;
+  border-left: 4px solid black;
+  border: 1px solid black;
+}
+
+.alert-ok {
+  background-color: lightgray;
+  color: black;
+}
+
+.alert-high {
+  background-color: yellow;
+  color: black;
+  border-left: 4px solid red;
+}
+
+.error-message {
+  background-color: yellow;
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.success-message {
+  background-color: lightblue;
+  color: blue;
+  border: 1px solid blue;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+/* utility classes */
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: lightblue;
+}
+
+.small {
+  font-size: 0.9em;
+  color: black;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+/* footer stuff */
+footer {
+  background-color: darkgray;
+  color: white;
+  padding: 15px 20px;
+  margin-top: 30px;
+  border-top: 1px solid black;
+  text-align: center;
+}

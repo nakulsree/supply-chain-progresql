@@ -1,0 +1,179 @@
+/* distributors page styles */
+
+main {
+  padding: 20px;
+}
+
+/* distributor filters */
+.filter-bar {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-bar label {
+  display: inline-block;
+  font-weight: bold;
+  margin: 0;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 6px 8px;
+  border: 1px solid black;
+  min-width: 120px;
+}
+
+.filter-bar button {
+  padding: 8px 20px;
+  background-color: lightgray;
+  border: 1px solid black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-bar button:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* distributor list */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  background-color: white;
+}
+
+table th {
+  background-color: lightgray;
+  color: black;
+  padding: 12px;
+  border: 1px solid black;
+  text-align: left;
+  font-weight: bold;
+}
+
+table td {
+  padding: 10px 12px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+table tr:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+/* kpi metrics for distributors */
+.kpi-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.kpi-box {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 15px;
+  text-align: center;
+}
+
+.kpi-label {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: black;
+}
+
+.kpi-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+/* performance rating */
+.performance-rating {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.rating-excellent {
+  background-color: lightblue;
+  color: black;
+}
+
+.rating-good {
+  background-color: lightgreen;
+  color: black;
+}
+
+.rating-fair {
+  background-color: yellow;
+  color: black;
+}
+
+.rating-poor {
+  background-color: red;
+  color: white;
+}
+
+/* distributor detail section */
+section {
+  background-color: white;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+section h2 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  color: black;
+}
+
+section h3 {
+  margin: 15px 0 10px 0;
+  color: black;
+}
+
+/* route information */
+.route-info {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.route-info strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* no data message */
+.empty-message {
+  padding: 20px;
+  text-align: center;
+  background-color: lightgray;
+  border: 1px solid black;
+  margin: 10px 0;
+  color: black;
+}
+
+/* error message styling */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin: 10px 0;
+}

@@ -1,0 +1,185 @@
+/* transactions page styles */
+
+/* container wrapper */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+main {
+  padding: 20px;
+}
+
+/* transaction filters */
+.filter-bar {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-bar label {
+  display: inline-block;
+  font-weight: bold;
+  margin: 0;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 6px 8px;
+  border: 1px solid black;
+  min-width: 120px;
+}
+
+.filter-bar button {
+  padding: 8px 20px;
+  background-color: lightgray;
+  border: 1px solid black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-bar button:hover {
+  background-color: gray;
+  color: white;
+}
+
+/* transaction type tabs */
+.transaction-type {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid black;
+  margin-right: 10px;
+  background-color: lightgray;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.type-shipping {
+  background-color: lightblue;
+}
+
+.type-receiving {
+  background-color: lightgreen;
+}
+
+.type-adjustment {
+  background-color: yellow;
+}
+
+/* transaction list table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  background-color: white;
+}
+
+table th {
+  background-color: lightgray;
+  color: black;
+  padding: 12px;
+  border: 1px solid black;
+  text-align: left;
+  font-weight: bold;
+}
+
+table td {
+  padding: 10px 12px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+table tr:hover {
+  background-color: lightblue;
+}
+
+/* status indicators */
+.status-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.status-on-time {
+  background-color: lightblue;
+  color: black;
+}
+
+.status-late {
+  background-color: yellow;
+  color: black;
+}
+
+.status-in-transit {
+  background-color: lightgray;
+  color: black;
+}
+
+/* summary stats */
+.transaction-summary {
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 15px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+/* section styling for transactions */
+section {
+  background-color: white;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+section h2 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  color: black;
+  font-size: 18px;
+}
+
+section h3 {
+  margin: 15px 0 10px 0;
+  color: black;
+  font-size: 16px;
+}
+
+/* canvas container styling */
+canvas {
+  max-width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+}
