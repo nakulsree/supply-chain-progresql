@@ -552,7 +552,7 @@ while ($row = $stmt->fetch()) {
       <?php foreach ($categoryRows as $row): ?>
         <tr>
           <td><?php echo htmlspecialchars($row['categoryname']); ?></td>
-          <td><?php echo (int)$row['Count']; ?></td>
+          <td><?php echo (int)($row['count'] ?? 0); ?></td>
           <td><?php echo number_format($row['avgrecoverydays'], 1); ?></td>
         </tr>
       <?php endforeach; ?>
@@ -578,8 +578,8 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($impactRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['ImpactLevel']); ?></td>
-          <td><?php echo (int)$row['Count']; ?></td>
+          <td><?php echo htmlspecialchars($row['impactlevel'] ?? ''); ?></td>
+          <td><?php echo (int)($row['count'] ?? 0); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

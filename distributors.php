@@ -626,8 +626,8 @@ if ($hasDistributor) {
     const ctx = document.getElementById('volumeTimeChart');
     if (!ctx || !volumeOverTimeData) return;
 
-    const labels = volumeOverTimeData.map(function(row) { return row.Period; });
-    const values = volumeOverTimeData.map(function(row) { return Number(row.TotalQuantity); });
+    const labels = volumeOverTimeData.map(function(row) { return row.period; });
+    const values = volumeOverTimeData.map(function(row) { return Number(row.totalquantity); });
 
     new Chart(ctx, {
         type: 'line',
@@ -652,10 +652,10 @@ if ($hasDistributor) {
     if (!ctx || !onTimeByRouteData) return;
 
     const labels = onTimeByRouteData.map(function(row) {
-        return row.SourceName + ' → ' + row.DestName;
+        return row.sourcename + ' → ' + row.destname;
     });
     const values = onTimeByRouteData.map(function(row) {
-        return Number(row.OnTimePercent);
+        return Number(row.ontimepercent);
     });
 
     new Chart(ctx, {
@@ -682,8 +682,8 @@ if ($hasDistributor) {
     const ctx = document.getElementById('statusChart');
     if (!ctx || !statusDistributionData) return;
 
-    const labels = statusDistributionData.map(function(row) { return row.StatusLabel; });
-    const values = statusDistributionData.map(function(row) { return Number(row.NumShipments); });
+    const labels = statusDistributionData.map(function(row) { return row.statuslabel; });
+    const values = statusDistributionData.map(function(row) { return Number(row.numshipments); });
 
     new Chart(ctx, {
         type: 'bar',
@@ -710,10 +710,10 @@ if ($hasDistributor) {
     if (!ctx || !disruptionExposureData) return;
 
     const labels = disruptionExposureData.map(function(row) {
-        return row.SourceName + ' → ' + row.DestName;
+        return row.sourcename + ' → ' + row.destname;
     });
     const values = disruptionExposureData.map(function(row) {
-        return Number(row.ExposureScore);
+        return Number(row.exposurescore);
     });
 
     new Chart(ctx, {

@@ -18,11 +18,11 @@ if (file_exists($envFile)) {
 
 // Database configuration for PostgreSQL
 // Supports both .env file and system environment variables (Replit style)
-define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? 'localhost');
-define('DB_PORT', $_ENV['DB_PORT'] ?? getenv('DB_PORT') ?? '5432');
-define('DB_USER', $_ENV['DB_USER'] ?? getenv('DB_USER') ?? 'postgres');
-define('DB_PASS', $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?? '');
-define('DB_NAME', $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? 'nsreekan');
+define('DB_HOST', $_ENV['DB_HOST'] ?? getenv('PGHOST') ?: (getenv('DB_HOST') ?: 'localhost'));
+define('DB_PORT', $_ENV['DB_PORT'] ?? getenv('PGPORT') ?: (getenv('DB_PORT') ?: '5432'));
+define('DB_USER', $_ENV['DB_USER'] ?? getenv('PGUSER') ?: (getenv('DB_USER') ?: 'postgres'));
+define('DB_PASS', $_ENV['DB_PASS'] ?? getenv('PGPASSWORD') ?: (getenv('DB_PASS') ?: ''));
+define('DB_NAME', $_ENV['DB_NAME'] ?? getenv('PGDATABASE') ?: (getenv('DB_NAME') ?: 'nsreekan'));
 
 // Create PostgreSQL connection using PDO
 try {
