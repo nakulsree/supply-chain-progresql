@@ -598,7 +598,7 @@ if ($hasDistributor) {
                         <tr>
                             <td><?php echo htmlspecialchars($routeLabel); ?></td>
                             <td><?php echo (int)$r['numshipments']; ?></td>
-                            <td><?php echo (int)$r['TotalQuantity']; ?></td>
+                            <td><?php echo (int)($r['totalquantity'] ?? 0); ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

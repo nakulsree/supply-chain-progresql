@@ -533,9 +533,9 @@ if ($unionSql !== '') {
       <select name="destination_company">
         <option value="0">All</option>
         <?php foreach ($companyList as $c): ?>
-          <option value="<?php echo (int)$c['CompanyID']; ?>"
-            <?php if ($destinationCompanyID === (int)$c['CompanyID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($c['CompanyName']); ?>
+          <option value="<?php echo (int)$c['companyid']; ?>"
+            <?php if ($destinationCompanyID === (int)$c['companyid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($c['companyname']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -631,22 +631,22 @@ if ($unionSql !== '') {
       <?php else: ?>
         <?php foreach ($transactionRows as $row): ?>
           <tr>
-            <td><?php echo htmlspecialchars($row['Date']); ?></td>
-            <td><?php echo htmlspecialchars($row['TransType']); ?></td>
+            <td><?php echo htmlspecialchars($row['date'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($row['transtype'] ?? ''); ?></td>
             <td>
               <?php
               // If you have a distributor-specific page, you can link to it here.
               // Example: if this Origin is a Distributor, link to distributor page.
-              echo htmlspecialchars($row['Origin']);
+              echo htmlspecialchars($row['origin'] ?? '');
               ?>
             </td>
-            <td><?php echo htmlspecialchars($row['Destination']); ?></td>
-            <td><?php echo htmlspecialchars($row['Product']); ?></td>
-            <td><?php echo (int)$row['Quantity']; ?></td>
-            <td><?php echo htmlspecialchars($row['PromisedDate']); ?></td>
-            <td><?php echo htmlspecialchars($row['DeliveryDate']); ?></td>
-            <td><?php echo $row['DelayDays'] === null ? '' : (int)$row['DelayDays']; ?></td>
-            <td><?php echo htmlspecialchars($row['Status']); ?></td>
+            <td><?php echo htmlspecialchars($row['destination'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($row['product'] ?? ''); ?></td>
+            <td><?php echo (int)($row['quantity'] ?? 0); ?></td>
+            <td><?php echo htmlspecialchars($row['promiseddate'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($row['deliverydate'] ?? ''); ?></td>
+            <td><?php echo $row['delaydays'] === null ? '' : (int)$row['delaydays']; ?></td>
+            <td><?php echo htmlspecialchars($row['status'] ?? ''); ?></td>
           </tr>
         <?php endforeach; ?>
       <?php endif; ?>
