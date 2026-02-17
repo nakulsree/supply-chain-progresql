@@ -304,7 +304,6 @@ if ($unionSql !== '') {
     while ($row = $stmt->fetch()) {
         $transactionRows[] = $row;
     }
-}
 
     $metrics = [
         'TotalVolume'  => 0,
@@ -522,9 +521,9 @@ if ($unionSql !== '') {
       <select name="origin_company">
         <option value="0">All</option>
         <?php foreach ($companyList as $c): ?>
-          <option value="<?php echo (int)$c['CompanyID']; ?>"
-            <?php if ($originCompanyID === (int)$c['CompanyID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($c['CompanyName']); ?>
+          <option value="<?php echo (int)$c['companyid']; ?>"
+            <?php if ($originCompanyID === (int)$c['companyid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($c['companyname']); ?>
           </option>
         <?php endforeach; ?>
       </select>

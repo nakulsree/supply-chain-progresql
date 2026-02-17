@@ -466,8 +466,8 @@ foreach($regions as $r) {
 <?php
 // populate company dropdown with all companies
 foreach($companies as $c) {
-    $selected = ($filter_company == $c['CompanyID']) ? 'selected' : '';
-    echo '<option value="' . $c['CompanyID'] . '" ' . $selected . '>' . htmlspecialchars($c['CompanyName']) . '</option>';
+    $selected = ($filter_company == $c['companyid']) ? 'selected' : '';
+    echo '<option value="' . $c['companyid'] . '" ' . $selected . '>' . htmlspecialchars($c['companyname']) . '</option>';
 }
 ?>
 </select>

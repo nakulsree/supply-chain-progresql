@@ -442,9 +442,9 @@ if ($hasDistributor) {
                 <select name="company_id" required>
                     <option value="">-- choose distributor --</option>
                     <?php foreach ($distributorList as $d): ?>
-                        <option value="<?php echo (int)$d['CompanyID']; ?>"
-                            <?php if ($distributorID === (int)$d['CompanyID']) echo "selected"; ?>>
-                            <?php echo htmlspecialchars($d['CompanyName']); ?>
+                        <option value="<?php echo (int)$d['companyid']; ?>"
+                            <?php if ($distributorID === (int)$d['companyid']) echo "selected"; ?>>
+                            <?php echo htmlspecialchars($d['companyname']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -465,8 +465,8 @@ if ($hasDistributor) {
                     <select name="route">
                         <option value="all">All routes</option>
                         <?php foreach ($routeOptions as $r):
-                            $value = (int)$r['SourceCompanyID'] . "-" . (int)$r['DestinationCompanyID'];
-                            $label = $r['SourceName'] . " → " . $r['DestName'];
+                            $value = (int)$r['sourcecompanyid'] . "-" . (int)$r['destinationcompanyid'];
+                            $label = $r['sourcename'] . " → " . $r['destname'];
                             ?>
                             <option value="<?php echo htmlspecialchars($value); ?>"
                                 <?php if ($selectedRoute === $value) echo "selected"; ?>>
@@ -480,9 +480,9 @@ if ($hasDistributor) {
                     <select name="product_id">
                         <option value="">All products</option>
                         <?php foreach ($productOptions as $p): ?>
-                            <option value="<?php echo (int)$p['ProductID']; ?>"
-                                <?php if ($selectedProductID === (int)$p['ProductID']) echo "selected"; ?>>
-                                <?php echo htmlspecialchars($p['ProductName']); ?>
+                            <option value="<?php echo (int)$p['productid']; ?>"
+                                <?php if ($selectedProductID === (int)$p['productid']) echo "selected"; ?>>
+                                <?php echo htmlspecialchars($p['productname']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
