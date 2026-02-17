@@ -33,7 +33,7 @@ $sqlRegionList = "SELECT DISTINCT ContinentName AS Region FROM Location ORDER BY
 $stmt = $conn->prepare($sqlRegionList);
 $stmt->execute();
 foreach ($stmt->fetchAll() as $row) {
-    $regionList[] = $row['Region'];
+    $regionList[] = $row['region'];
 }
 
 
@@ -329,10 +329,10 @@ if ($unionSql !== '') {
     $stmt = $conn->prepare($sqlAgg);
     $stmt->execute($params_union);
     if ($row = $stmt->fetch()) {
-        $totalVolume      = (int)$row['TotalVolume'];
-        $onTimeShipments  = (int)$row['OnTimeShipments'];
-        $totalShipments   = (int)$row['TotalShipments'];
-        $delayedCount     = (int)$row['DelayedCount'];
+        $totalVolume      = (int)$row['totalvolume'];
+        $onTimeShipments  = (int)$row['ontimeshipments'];
+        $totalShipments   = (int)$row['totalshipments'];
+        $delayedCount     = (int)$row['delayedcount'];
 
         $metrics['TotalVolume']  = $totalVolume;
         $metrics['DelayedCount'] = $delayedCount;
@@ -415,7 +415,7 @@ if ($unionSql !== '') {
     $row = $stmt->fetch();
     if ($row) {
         $deliveryPerformance['onTime'] = (int)$row['OnTimeCount'];
-        $deliveryPerformance['delayed'] = (int)$row['DelayedCount'];
+        $deliveryPerformance['delayed'] = (int)$row['delayedcount'];
     }
 
     
@@ -688,8 +688,8 @@ if ($unionSql !== '') {
     const ctx = document.getElementById('byTypeChart');
     if (!ctx || !summaryByTypeData) return;
 
-    const labels = summaryByTypeData.map(r => r.TransType);
-    const values = summaryByTypeData.map(r => Number(r.TotalQty));
+    const labels = summaryByTypeData.map(r => r.transtype);
+    const values = summaryByTypeData.map(r => Number(r.totalqty));
 
     new Chart(ctx, {
       type: 'bar',
@@ -716,8 +716,8 @@ if ($unionSql !== '') {
     const ctx = document.getElementById('statusChart');
     if (!ctx || !summaryByStatusData) return;
 
-    const labels = summaryByStatusData.map(r => r.Status);
-    const values = summaryByStatusData.map(r => Number(r.Cnt));
+    const labels = summaryByStatusData.map(r => r.status);
+    const values = summaryByStatusData.map(r => Number(r.cnt));
 
     new Chart(ctx, {
       type: 'bar',
@@ -744,8 +744,8 @@ if ($unionSql !== '') {
     const ctx = document.getElementById('productsChart');
     if (!ctx || !productsByVolumeData || productsByVolumeData.length === 0) return;
 
-    const labels = productsByVolumeData.map(r => r.Product);
-    const values = productsByVolumeData.map(r => Number(r.TotalQty));
+    const labels = productsByVolumeData.map(r => r.product);
+    const values = productsByVolumeData.map(r => Number(r.totalqty));
 
     new Chart(ctx, {
       type: 'bar',

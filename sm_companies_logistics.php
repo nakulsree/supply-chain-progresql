@@ -242,9 +242,9 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($topDistributors as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-          <td><?php echo (int)$row['NumShipments']; ?></td>
-          <td><?php echo (int)$row['TotalQuantity']; ?></td>
+          <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+          <td><?php echo (int)$row['numshipments']; ?></td>
+          <td><?php echo (int)$row['totalquantity']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -263,9 +263,9 @@ while ($row = $stmt->fetch()) {
       <select name="distributor_id">
         <option value="">-- choose distributor --</option>
         <?php foreach ($distributorList as $d): ?>
-          <option value="<?php echo (int)$d['CompanyID']; ?>"
-            <?php if ($selectedDistributorID == (int)$d['CompanyID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($d['CompanyName']); ?>
+          <option value="<?php echo (int)$d['companyid']; ?>"
+            <?php if ($selectedDistributorID == (int)$d['companyid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($d['companyname']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -290,12 +290,12 @@ while ($row = $stmt->fetch()) {
       <tbody>
         <?php foreach ($distributorShipments as $row): ?>
           <tr>
-            <td><?php echo (int)$row['ShipmentID']; ?></td>
-            <td><?php echo htmlspecialchars($row['PromisedDate']); ?></td>
-            <td><?php echo htmlspecialchars($row['ActualDate']); ?></td>
-            <td><?php echo htmlspecialchars($row['SourceName']); ?></td>
-            <td><?php echo htmlspecialchars($row['DestName']); ?></td>
-            <td><?php echo (int)$row['Quantity']; ?></td>
+            <td><?php echo (int)$row['shipmentid']; ?></td>
+            <td><?php echo htmlspecialchars($row['promiseddate']); ?></td>
+            <td><?php echo htmlspecialchars($row['actualdate']); ?></td>
+            <td><?php echo htmlspecialchars($row['sourcename']); ?></td>
+            <td><?php echo htmlspecialchars($row['destname']); ?></td>
+            <td><?php echo (int)$row['quantity']; ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -317,10 +317,10 @@ while ($row = $stmt->fetch()) {
         <tbody>
           <?php foreach ($routeSummary as $row): ?>
             <tr>
-              <td><?php echo htmlspecialchars($row['SourceName']); ?></td>
-              <td><?php echo htmlspecialchars($row['DestName']); ?></td>
-              <td><?php echo (int)$row['NumShipments']; ?></td>
-              <td><?php echo (int)$row['TotalQuantity']; ?></td>
+              <td><?php echo htmlspecialchars($row['sourcename']); ?></td>
+              <td><?php echo htmlspecialchars($row['destname']); ?></td>
+              <td><?php echo (int)$row['numshipments']; ?></td>
+              <td><?php echo (int)$row['totalquantity']; ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -352,11 +352,11 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($delayRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-          <td><?php echo number_format($row['AvgDelay'], 2); ?></td>
-          <td><?php echo (int)$row['NumShipments']; ?></td>
-          <td><?php echo (int)$row['OnTimeShipments']; ?></td>
-          <td><?php echo number_format($row['OnTimePercent'], 1); ?>%</td>
+          <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+          <td><?php echo number_format($row['avgdelay'], 2); ?></td>
+          <td><?php echo (int)$row['numshipments']; ?></td>
+          <td><?php echo (int)$row['ontimeshipments']; ?></td>
+          <td><?php echo number_format($row['ontimepercent'], 1); ?>%</td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -401,10 +401,10 @@ while ($row = $stmt->fetch()) {
       <select name="location_id" required>
         <option value="">-- choose location --</option>
         <?php foreach ($locationList as $loc): ?>
-          <option value="<?php echo (int)$loc['LocationID']; ?>">
+          <option value="<?php echo (int)$loc['locationid']; ?>">
             <?php
               echo htmlspecialchars(
-                $loc['ContinentName'] . " - " . $loc['CountryName'] . " - " . $loc['City']
+                $loc['continentname'] . " - " . $loc['countryname'] . " - " . $loc['city']
               );
             ?>
           </option>
@@ -434,8 +434,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('topDistributorsChart');
     if (!ctx || !topDistributorsData) return;
 
-    const labels = topDistributorsData.map(function(r) { return r.CompanyName; });
-    const values = topDistributorsData.map(function(r) { return Number(r.TotalQuantity); });
+    const labels = topDistributorsData.map(function(r) { return r.companyname; });
+    const values = topDistributorsData.map(function(r) { return Number(r.totalquantity); });
 
     new Chart(ctx, {
       type: 'bar',
@@ -459,8 +459,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('delayChart');
     if (!ctx || !delayData) return;
 
-    const labels = delayData.map(function(r) { return r.CompanyName; });
-    const values = delayData.map(function(r) { return Number(r.AvgDelay); });
+    const labels = delayData.map(function(r) { return r.companyname; });
+    const values = delayData.map(function(r) { return Number(r.avgdelay); });
 
     new Chart(ctx, {
       type: 'bar',

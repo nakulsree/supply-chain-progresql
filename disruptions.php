@@ -193,7 +193,7 @@ while ($row = $stmt->fetch()) {
     } else {
         $rate = 0;
     }
-    $company_name = $row['CompanyName'];
+    $company_name = $row['companyname'];
     $hdr_row = array();
     $hdr_row['company'] = $company_name;
     $hdr_row['high_rate'] = $rate;
@@ -342,7 +342,7 @@ $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 // populate the dsd_data array with counts from the query
 while ($row = $stmt->fetch()) {
-    $level = $row['ImpactLevel'];
+    $level = $row['ilevel'];
     $count = intval($row['severity_count']);
     if($level == 'Low') {
         $dsd_data['Low'] = $count;
@@ -493,11 +493,11 @@ foreach($companies as $c) {
 <tr><th>Company</th><th>Category</th><th>Region</th><th>Severity</th><th>Date</th></tr>
 <?php foreach($ongoing_disruptions as $alert): ?>
 <tr>
-<td><?php echo htmlspecialchars($alert['CompanyName']); ?></td>
-<td><?php echo htmlspecialchars($alert['CategoryName']); ?></td>
-<td><?php echo htmlspecialchars($alert['ContinentName']); ?></td>
-<td><?php echo htmlspecialchars($alert['ImpactLevel']); ?></td>
-<td><?php echo substr($alert['EventDate'], 0, 10); ?></td>
+<td><?php echo htmlspecialchars($alert['companyname']); ?></td>
+<td><?php echo htmlspecialchars($alert['categoryname']); ?></td>
+<td><?php echo htmlspecialchars($alert['continentname']); ?></td>
+<td><?php echo htmlspecialchars($alert['impactlevel']); ?></td>
+<td><?php echo substr($alert['eventdate'], 0, 10); ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
@@ -517,7 +517,7 @@ foreach($companies as $c) {
 <tr><th>Company</th><th>Total Count</th><th>Frequency/Month</th></tr>
 <?php foreach($df_data as $item): ?>
 <tr>
-<td><?php echo htmlspecialchars($item['CompanyName']); ?></td>
+<td><?php echo htmlspecialchars($item['companyname']); ?></td>
 <td><?php echo intval($item['disruption_count']); ?></td>
 <td><?php echo floatval($item['disruption_frequency']); ?></td>
 </tr>
@@ -581,7 +581,7 @@ foreach($companies as $c) {
 <tr><th>Company</th><th>Days</th></tr>
 <?php foreach($td_data as $item): ?>
 <tr>
-<td><?php echo htmlspecialchars($item['CompanyName']); ?></td>
+<td><?php echo htmlspecialchars($item['companyname']); ?></td>
 <td><?php echo intval($item['total_downtime_days']); ?></td>
 </tr>
 <?php endforeach; ?>
@@ -683,7 +683,7 @@ if($value > 15) {
     const ctx = document.getElementById('dfChart');
     if (!ctx || !dfData || dfData.length === 0) return;
 
-    const labels = dfData.map(d => d.CompanyName);
+    const labels = dfData.map(d => d.companyname);
     const freqs = dfData.map(d => Number(d.disruption_frequency));
 
     new Chart(ctx, {

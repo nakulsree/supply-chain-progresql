@@ -22,7 +22,7 @@ if (!$user) {
     exit;
 }
 
-if ($user['Password'] !== $password) {
+if ($user['password'] !== $password) {
     $_SESSION['login_error'] = 'Invalid username or password';
     header('Location: index.php');
     exit;
@@ -30,11 +30,11 @@ if ($user['Password'] !== $password) {
 
 $_SESSION['loggedin'] = true;
 $_SESSION['username'] = $username;
-$_SESSION['user_id'] = $user['UserID'];
-$_SESSION['full_name'] = $user['FullName'];
-$_SESSION['role'] = $user['Role'];
+$_SESSION['user_id'] = $user['userid'];
+$_SESSION['full_name'] = $user['fullname'];
+$_SESSION['role'] = $user['role'];
 
-if ($user['Role'] === 'SeniorManager') {
+if ($user['role'] === 'SeniorManager') {
     header('Location: sm_overview.php');
 } else {
     header('Location: overview.php');

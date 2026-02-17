@@ -19,7 +19,7 @@ $stmt = $conn->prepare($sqlRegions);
 $stmt->execute();
 $regions_result = $stmt->fetchAll();
 foreach ($regions_result as $row) {
-    $regions[] = $row['ContinentName'];
+    $regions[] = $row['continentname'];
 }
 
 // MAIN QUERY: COMPANY LIST + KPIs
@@ -181,23 +181,23 @@ $companies = $stmt->fetchAll();
       <?php else: ?>
         <?php foreach ($companies as $row): ?>
           <tr class="clickable-row"
-              data-link="company_view.php?company_id=<?php echo (int)$row['CompanyID']; ?>">
-            <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-            <td><?php echo htmlspecialchars($row['Type']); ?></td>
-            <td><?php echo htmlspecialchars($row['TierLevel']); ?></td>
-            <td><?php echo htmlspecialchars($row['Region']); ?></td>
-            <td><?php echo (int)$row['NumProducts']; ?></td>
+              data-link="company_view.php?company_id=<?php echo (int)$row['companyid']; ?>">
+            <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+            <td><?php echo htmlspecialchars($row['type']); ?></td>
+            <td><?php echo htmlspecialchars($row['tierlevel']); ?></td>
+            <td><?php echo htmlspecialchars($row['region']); ?></td>
+            <td><?php echo (int)$row['numproducts']; ?></td>
             <td>
               <?php
-              if ($row['OnTimeRate'] === null) {
+              if ($row['ontimerate'] === null) {
                   echo 'N/A';
               } else {
-                  echo number_format($row['OnTimeRate'], 1);
+                  echo number_format($row['ontimerate'], 1);
               }
               ?>
             </td>
             <td>
-              <a href="company_view.php?company_id=<?php echo (int)$row['CompanyID']; ?>">
+              <a href="company_view.php?company_id=<?php echo (int)$row['companyid']; ?>">
                 View
               </a>
             </td>

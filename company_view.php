@@ -105,7 +105,7 @@ while ($row = $stmt->fetch()) {
 $totalShippedQty = 0;
 $utilizationPct = null;
 
-if ($companyInfo['Type'] === 'Manufacturer' && !empty($companyInfo['FactoryCapacity'])) {
+if ($companyInfo['type'] === 'Manufacturer' && !empty($companyInfo['factorycapacity'])) {
     $sqlShipSum = "
         SELECT COALESCE(SUM(Quantity),0) AS TotalQty
         FROM Shipping
@@ -115,15 +115,15 @@ if ($companyInfo['Type'] === 'Manufacturer' && !empty($companyInfo['FactoryCapac
     $stmt = $conn->prepare($sqlShipSum);
     $stmt->execute([$companyID, $startDate, $endDate]);
     $row = $stmt->fetch();
-    $totalShippedQty = (int)$row['TotalQty'];
-    if ($companyInfo['FactoryCapacity'] > 0) {
+    $totalShippedQty = (int)$row['totalqty'];
+    if ($companyInfo['factorycapacity'] > 0) {
         // utilization calc: shipments divided by capacity
-        $utilizationPct = min(100.0, 100.0 * $totalShippedQty / (float)$companyInfo['FactoryCapacity']);
+        $utilizationPct = min(100.0, 100.0 * $totalShippedQty / (float)$companyInfo['factorycapacity']);
     }
 }
 
 $routes = [];
-if ($companyInfo['Type'] === 'Distributor') {
+if ($companyInfo['type'] === 'Distributor') {
     $sqlRoutes = "
     SELECT 
         fromC.CompanyName AS FromCompany,
@@ -173,8 +173,8 @@ ORDER BY p.ProductName
 $stmt = $conn->prepare($sqlProducts);
 $stmt->execute([$companyID, $startDate, $endDate]);
 while ($row = $stmt->fetch()) {
-    $row['TotalQty'] = (int)$row['TotalQty'];
-    $totalProductQty += $row['TotalQty'];
+    $row['totalqty'] = (int)$row['totalqty'];
+    $totalProductQty += $row['totalqty'];
     $productRows[] = $row;
 }
 
@@ -183,15 +183,15 @@ $distinctProducts = count($productRows);
 $top3SharePct = null;
 if ($distinctProducts > 0 && $totalProductQty > 0) {
     usort($productRows, function($a, $b) {
-        if ($a['TotalQty'] == $b['TotalQty']) {
+        if ($a['totalqty'] == $b['totalqty']) {
             return 0;
         }
-        return ($a['TotalQty'] < $b['TotalQty']) ? 1 : -1;
+        return ($a['totalqty'] < $b['totalqty']) ? 1 : -1;
     });
 
     $top3Qty = 0;
     for ($i = 0; $i < min(3, count($productRows)); $i++) {
-        $top3Qty += $productRows[$i]['TotalQty'];
+        $top3Qty += $productRows[$i]['totalqty'];
     }
     $top3SharePct = 100.0 * $top3Qty / $totalProductQty;
 }
@@ -355,13 +355,13 @@ if ($direction === 'All' || $direction === 'Adjustments') {
 // filter by status
 if ($statusFilter !== 'All') {
     $transactions = array_values(array_filter($transactions, function ($row) use ($statusFilter) {
-        return $row['Status'] === $statusFilter;
+        return $row['status'] === $statusFilter;
     }));
 }
 
 // sort by date newest first
 usort($transactions, function ($a, $b) {
-    return strcmp($b['TxnDate'], $a['TxnDate']);
+    return strcmp($b['txndate'], $a['txndate']);
 });
 
 // get kpi stats
@@ -389,11 +389,11 @@ WHERE s.SourceCompanyID = ?
 $stmt = $conn->prepare($sqlKpi);
 $stmt->execute([$companyID, $startDate, $endDate]);
 $row = $stmt->fetch();
-if ($row['TotalShipments'] > 0) {
-    $onTimeRate = 100.0 * $row['OnTimeCount'] / $row['TotalShipments'];
+if ($row['totalshipments'] > 0) {
+    $onTimeRate = 100.0 * $row['ontimecount'] / $row['totalshipments'];
 }
-$avgDelay = $row['AvgDelay'];
-$stdDelay = $row['StdDelay'];
+$avgDelay = $row['avgdelay'];
+$stdDelay = $row['stddelay'];
 
 $sqlDelayHist = "
 SELECT 
@@ -452,8 +452,8 @@ ORDER BY de.EventDate DESC
 $stmt = $conn->prepare($sqlDisruptList);
 $stmt->execute([$companyID]);
 while ($row = $stmt->fetch()) {
-    $eventDate    = $row['EventDate'];
-    $recoveryDate = $row['EventRecoveryDate'];
+    $eventDate    = $row['eventdate'];
+    $recoveryDate = $row['eventrecoverydate'];
     $status       = ($recoveryDate === null || $recoveryDate === '0000-00-00') ? 'Ongoing' : 'Resolved';
     $recoveryTime = null;
     if ($recoveryDate && $recoveryDate !== '0000-00-00') {
@@ -461,10 +461,10 @@ while ($row = $stmt->fetch()) {
         $stmt2 = $conn->prepare($sqlDays);
         $stmt2->execute([$recoveryDate, $eventDate]);
         $tmp = $stmt2->fetch();
-        $recoveryTime = $tmp['Days'];
+        $recoveryTime = $tmp['days'];
     }
-    $row['Status'] = $status;
-    $row['RecoveryTime'] = $recoveryTime;
+    $row['status'] = $status;
+    $row['recoverytime'] = $recoveryTime;
     $disruptionList[] = $row;
 }
 
@@ -472,29 +472,29 @@ while ($row = $stmt->fetch()) {
 $delayLabels = [];
 $delayCounts = [];
 foreach ($delayHistogram as $row) {
-    $delayLabels[] = $row['DelayDays'];
-    $delayCounts[] = $row['Cnt'];
+    $delayLabels[] = $row['delaydays'];
+    $delayCounts[] = $row['cnt'];
 }
 
 $finLabels = [];
 $finValues = [];
 foreach ($financialHistory as $row) {
-    $finLabels[] = $row['RepYear'] . ' ' . $row['Quarter'];
-    $finValues[] = (float)$row['HealthScore'];
+    $finLabels[] = $row['repyear'] . ' ' . $row['quarter'];
+    $finValues[] = (float)$row['healthscore'];
 }
 
 $disruptLabels = [];
 $disruptCounts = [];
 foreach ($disruptionMonthly as $row) {
-    $disruptLabels[] = $row['MonthLabel'];
-    $disruptCounts[] = (int)$row['NumEvents'];
+    $disruptLabels[] = $row['monthlabel'];
+    $disruptCounts[] = (int)$row['numevents'];
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Company Detail – <?php echo htmlspecialchars($companyInfo['CompanyName']); ?></title>
+  <title>Company Detail – <?php echo htmlspecialchars($companyInfo['companyname']); ?></title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -515,17 +515,17 @@ foreach ($disruptionMonthly as $row) {
   <section>
     <h2>Company Info</h2>
     <div class="card">
-      <h3><?php echo htmlspecialchars($companyInfo['CompanyName']); ?></h3>
+      <h3><?php echo htmlspecialchars($companyInfo['companyname']); ?></h3>
       <p>
         <strong>Address:</strong>
         <?php
-          echo htmlspecialchars($companyInfo['City']) . ', ' .
-               htmlspecialchars($companyInfo['CountryName']) . ' (' .
-               htmlspecialchars($companyInfo['ContinentName']) . ')';
+          echo htmlspecialchars($companyInfo['city']) . ', ' .
+               htmlspecialchars($companyInfo['countryname']) . ' (' .
+               htmlspecialchars($companyInfo['continentname']) . ')';
         ?><br>
         <strong>Type / Tier:</strong>
-        <?php echo htmlspecialchars($companyInfo['Type']); ?>
-        &nbsp;–&nbsp; Tier <?php echo htmlspecialchars($companyInfo['TierLevel']); ?>
+        <?php echo htmlspecialchars($companyInfo['type']); ?>
+        &nbsp;–&nbsp; Tier <?php echo htmlspecialchars($companyInfo['tierlevel']); ?>
       </p>
 
       <p>
@@ -536,8 +536,8 @@ foreach ($disruptionMonthly as $row) {
           <ul class="inline">
             <?php foreach ($upstream as $u): ?>
               <li>
-                <a href="company_view.php?company_id=<?php echo (int)$u['CompanyID']; ?>">
-                  <?php echo htmlspecialchars($u['CompanyName']); ?>
+                <a href="company_view.php?company_id=<?php echo (int)$u['companyid']; ?>">
+                  <?php echo htmlspecialchars($u['companyname']); ?>
                 </a>
               </li>
             <?php endforeach; ?>
@@ -553,8 +553,8 @@ foreach ($disruptionMonthly as $row) {
           <ul class="inline">
             <?php foreach ($downstream as $d): ?>
               <li>
-                <a href="company_view.php?company_id=<?php echo (int)$d['CompanyID']; ?>">
-                  <?php echo htmlspecialchars($d['CompanyName']); ?>
+                <a href="company_view.php?company_id=<?php echo (int)$d['companyid']; ?>">
+                  <?php echo htmlspecialchars($d['companyname']); ?>
                 </a>
               </li>
             <?php endforeach; ?>
@@ -566,7 +566,7 @@ foreach ($disruptionMonthly as $row) {
         <strong>Most recent financial status:</strong>
         <?php if ($latestFinancial): ?>
           <?php
-            $score = (float)$latestFinancial['HealthScore'];
+            $score = (float)$latestFinancial['healthscore'];
             if ($score >= 75) {
                 $label = "Healthy";
                 $cls = "badge-ok";
@@ -580,7 +580,7 @@ foreach ($disruptionMonthly as $row) {
           ?>
           <span class="badge <?php echo $cls; ?>">
             <?php echo $label; ?> (<?php echo number_format($score,1); ?>)
-            – <?php echo htmlspecialchars($latestFinancial['Quarter']) . ' ' . htmlspecialchars($latestFinancial['RepYear']); ?>
+            – <?php echo htmlspecialchars($latestFinancial['quarter']) . ' ' . htmlspecialchars($latestFinancial['repyear']); ?>
           </span>
         <?php else: ?>
           No financial reports recorded.
@@ -599,10 +599,10 @@ foreach ($disruptionMonthly as $row) {
   <section>
     <h2>Capacity &amp; Logistics</h2>
     <div class="card">
-      <?php if ($companyInfo['Type'] === 'Manufacturer'): ?>
+      <?php if ($companyInfo['type'] === 'Manufacturer'): ?>
         <p>
           <strong>Factory capacity:</strong>
-          <?php echo (int)$companyInfo['FactoryCapacity']; ?> units / week
+          <?php echo (int)$companyInfo['factorycapacity']; ?> units / week
         </p>
         <p>
           <strong>Total shipped in date range:</strong>
@@ -612,7 +612,7 @@ foreach ($disruptionMonthly as $row) {
           <strong>Utilization (rough):</strong>
           <?php echo $utilizationPct === null ? 'N/A' : number_format($utilizationPct,1) . '%'; ?>
         </p>
-      <?php elseif ($companyInfo['Type'] === 'Distributor'): ?>
+      <?php elseif ($companyInfo['type'] === 'Distributor'): ?>
         <p><strong>Unique routes operated:</strong> <?php echo count($routes); ?></p>
         <?php if (!empty($routes)): ?>
           <table>
@@ -628,11 +628,11 @@ foreach ($disruptionMonthly as $row) {
             <tbody>
               <?php foreach ($routes as $r): ?>
                 <tr>
-                  <td><?php echo htmlspecialchars($r['FromCompany']); ?></td>
-                  <td><?php echo htmlspecialchars($r['FromRegion']); ?></td>
-                  <td><?php echo htmlspecialchars($r['ToCompany']); ?></td>
-                  <td><?php echo htmlspecialchars($r['ToRegion']); ?></td>
-                  <td><?php echo number_format($r['AvgVolume'],1); ?></td>
+                  <td><?php echo htmlspecialchars($r['fromcompany']); ?></td>
+                  <td><?php echo htmlspecialchars($r['fromregion']); ?></td>
+                  <td><?php echo htmlspecialchars($r['tocompany']); ?></td>
+                  <td><?php echo htmlspecialchars($r['toregion']); ?></td>
+                  <td><?php echo number_format($r['avgvolume'],1); ?></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
@@ -668,12 +668,12 @@ foreach ($disruptionMonthly as $row) {
           </thead>
           <tbody>
             <?php foreach ($productRows as $p): 
-                    $share = ($totalProductQty > 0) ? 100.0 * $p['TotalQty'] / $totalProductQty : 0;
+                    $share = ($totalProductQty > 0) ? 100.0 * $p['totalqty'] / $totalProductQty : 0;
             ?>
               <tr>
-                <td><?php echo (int)$p['ProductID']; ?></td>
-                <td><?php echo htmlspecialchars($p['ProductName']); ?></td>
-                <td><?php echo htmlspecialchars($p['Category']); ?></td>
+                <td><?php echo (int)$p['productid']; ?></td>
+                <td><?php echo htmlspecialchars($p['productname']); ?></td>
+                <td><?php echo htmlspecialchars($p['category']); ?></td>
                 <td><?php echo number_format($share,1); ?></td>
               </tr>
             <?php endforeach; ?>
@@ -712,9 +712,9 @@ foreach ($disruptionMonthly as $row) {
         <select name="product_id">
           <option value="0">All</option>
           <?php foreach ($productOptions as $opt): ?>
-            <option value="<?php echo (int)$opt['ProductID']; ?>"
-              <?php if ($productFilterID === (int)$opt['ProductID']) echo 'selected'; ?>>
-              <?php echo htmlspecialchars($opt['ProductName']); ?>
+            <option value="<?php echo (int)$opt['productid']; ?>"
+              <?php if ($productFilterID === (int)$opt['productid']) echo 'selected'; ?>>
+              <?php echo htmlspecialchars($opt['productname']); ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -724,9 +724,9 @@ foreach ($disruptionMonthly as $row) {
         <select name="counterparty_id">
           <option value="0">All</option>
           <?php foreach ($counterpartyOptions as $opt): ?>
-            <option value="<?php echo (int)$opt['CompanyID']; ?>"
-              <?php if ($counterpartyID === (int)$opt['CompanyID']) echo 'selected'; ?>>
-              <?php echo htmlspecialchars($opt['CompanyName']); ?>
+            <option value="<?php echo (int)$opt['companyid']; ?>"
+              <?php if ($counterpartyID === (int)$opt['companyid']) echo 'selected'; ?>>
+              <?php echo htmlspecialchars($opt['companyname']); ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -764,15 +764,15 @@ foreach ($disruptionMonthly as $row) {
         <?php else: ?>
           <?php foreach ($transactions as $t): ?>
             <tr>
-              <td><?php echo htmlspecialchars($t['TxnDate']); ?></td>
-              <td><?php echo htmlspecialchars($t['TxnType']); ?></td>
-              <td><?php echo htmlspecialchars($t['FromName']); ?></td>
-              <td><?php echo htmlspecialchars($t['ToName']); ?></td>
-              <td><?php echo htmlspecialchars($t['Product']); ?></td>
-              <td><?php echo (int)$t['Quantity']; ?></td>
-              <td><?php echo htmlspecialchars($t['PromisedDate']); ?></td>
-              <td><?php echo htmlspecialchars($t['DeliveryDate']); ?></td>
-              <td><?php echo htmlspecialchars($t['Status']); ?></td>
+              <td><?php echo htmlspecialchars($t['txndate']); ?></td>
+              <td><?php echo htmlspecialchars($t['txntype']); ?></td>
+              <td><?php echo htmlspecialchars($t['fromname']); ?></td>
+              <td><?php echo htmlspecialchars($t['toname']); ?></td>
+              <td><?php echo htmlspecialchars($t['product']); ?></td>
+              <td><?php echo (int)$t['quantity']; ?></td>
+              <td><?php echo htmlspecialchars($t['promiseddate']); ?></td>
+              <td><?php echo htmlspecialchars($t['deliverydate']); ?></td>
+              <td><?php echo htmlspecialchars($t['status']); ?></td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>
@@ -829,12 +829,12 @@ foreach ($disruptionMonthly as $row) {
         <?php else: ?>
           <?php foreach ($disruptionList as $d): ?>
             <tr>
-              <td><?php echo htmlspecialchars($d['EventDate']); ?></td>
-              <td><?php echo htmlspecialchars($d['ImpactLevel']); ?></td>
-              <td><?php echo htmlspecialchars($d['CategoryName']); ?></td>
-              <td><?php echo htmlspecialchars($d['Status']); ?></td>
+              <td><?php echo htmlspecialchars($d['eventdate']); ?></td>
+              <td><?php echo htmlspecialchars($d['impactlevel']); ?></td>
+              <td><?php echo htmlspecialchars($d['categoryname']); ?></td>
+              <td><?php echo htmlspecialchars($d['status']); ?></td>
               <td>
-                <?php echo $d['RecoveryTime'] === null ? 'N/A' : (int)$d['RecoveryTime']; ?>
+                <?php echo $d['recoverytime'] === null ? 'N/A' : (int)$d['recoverytime']; ?>
               </td>
             </tr>
           <?php endforeach; ?>

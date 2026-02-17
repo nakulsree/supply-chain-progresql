@@ -20,6 +20,11 @@ CREATE TABLE "User" (
     Role role_enum NOT NULL
 );
 
+-- Insert demo users
+INSERT INTO "User" (FullName, Username, Password, Role) VALUES
+('Senior Manager', 'sm', 'sm123', 'SeniorManager'),
+('Supply Chain Manager', 'scm', 'scm123', 'SupplyChainManager');
+
 CREATE TABLE Location (
     LocationID SERIAL PRIMARY KEY,
     CountryName VARCHAR(100) NOT NULL,

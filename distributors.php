@@ -78,7 +78,7 @@ if ($distributorID > 0) {
     if (!$info) {
         $errorMessage = "Selected company not found.";
     } else {
-        if ($info['Type'] !== 'Distributor') {
+        if ($info['type'] !== 'Distributor') {
             $errorMessage = "Selected company is not a Distributor.";
         } else {
             $distributorInfo = $info;
@@ -343,7 +343,7 @@ if ($hasDistributor) {
     $stmt->execute($productsParams);
     while ($row = $stmt->fetch()) {
         $productsHandled[] = $row;
-        $totalVolumeAllProducts += (int)$row['TotalVolume'];
+        $totalVolumeAllProducts += (int)$row['totalvolume'];
     }
 
 // get route summary stats
@@ -411,13 +411,13 @@ if ($hasDistributor) {
 <main>
     <?php if ($hasDistributor): ?>
         <section>
-            <h2>Distributor: <?php echo htmlspecialchars($distributorInfo['CompanyName']); ?></h2>
+            <h2>Distributor: <?php echo htmlspecialchars($distributorInfo['companyname']); ?></h2>
             <p>
                 Location:
                 <?php
-                echo htmlspecialchars($distributorInfo['City']) . ", " .
-                     htmlspecialchars($distributorInfo['CountryName']) . " (" .
-                     htmlspecialchars($distributorInfo['ContinentName']) . ")";
+                echo htmlspecialchars($distributorInfo['city']) . ", " .
+                     htmlspecialchars($distributorInfo['countryname']) . " (" .
+                     htmlspecialchars($distributorInfo['continentname']) . ")";
                 ?>
             </p>
         </section>
@@ -530,16 +530,16 @@ if ($hasDistributor) {
                     </thead>
                     <tbody>
                     <?php foreach ($shipmentsOut as $s):
-                        $status = ($s['PromisedDate'] < date('Y-m-d')) ? 'Delayed' : 'In transit';
-                        $routeLabel = $s['SourceName'] . " → " . $s['DestName'];
+                        $status = ($s['promiseddate'] < date('Y-m-d')) ? 'Delayed' : 'In transit';
+                        $routeLabel = $s['sourcename'] . " → " . $s['destname'];
                         ?>
                         <tr>
-                            <td><?php echo (int)$s['ShipmentID']; ?></td>
+                            <td><?php echo (int)$s['shipmentid']; ?></td>
                             <td><?php echo htmlspecialchars($routeLabel); ?></td>
-                            <td><?php echo htmlspecialchars($s['ProductName']); ?></td>
-                            <td><?php echo (int)$s['Quantity']; ?></td>
-                            <td><?php echo htmlspecialchars($s['PromisedDate']); ?></td>
-                            <td><?php echo htmlspecialchars($s['PromisedDate']); ?></td>
+                            <td><?php echo htmlspecialchars($s['productname']); ?></td>
+                            <td><?php echo (int)$s['quantity']; ?></td>
+                            <td><?php echo htmlspecialchars($s['promiseddate']); ?></td>
+                            <td><?php echo htmlspecialchars($s['promiseddate']); ?></td>
                             <td><?php echo htmlspecialchars($status); ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -563,12 +563,12 @@ if ($hasDistributor) {
                     </thead>
                     <tbody>
                     <?php foreach ($productsHandled as $p):
-                        $volume = (int)$p['TotalVolume'];
+                        $volume = (int)$p['totalvolume'];
                         $pct = ($totalVolumeAllProducts > 0)
                             ? (100.0 * $volume / $totalVolumeAllProducts) : 0;
                         ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($p['ProductName']); ?></td>
+                            <td><?php echo htmlspecialchars($p['productname']); ?></td>
                             <td><?php echo $volume; ?></td>
                             <td><?php echo number_format($pct, 1); ?>%</td>
                         </tr>
@@ -593,11 +593,11 @@ if ($hasDistributor) {
                     </thead>
                     <tbody>
                     <?php foreach ($routeSummary as $r):
-                        $routeLabel = $r['SourceName'] . " → " . $r['DestName'];
+                        $routeLabel = $r['sourcename'] . " → " . $r['destname'];
                         ?>
                         <tr>
                             <td><?php echo htmlspecialchars($routeLabel); ?></td>
-                            <td><?php echo (int)$r['NumShipments']; ?></td>
+                            <td><?php echo (int)$r['numshipments']; ?></td>
                             <td><?php echo (int)$r['TotalQuantity']; ?></td>
                         </tr>
                     <?php endforeach; ?>

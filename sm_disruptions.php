@@ -334,9 +334,9 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($regionalRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['Region']); ?></td>
-          <td><?php echo (int)$row['TotalEvents']; ?></td>
-          <td><?php echo (int)$row['HighImpactEvents']; ?></td>
+          <td><?php echo htmlspecialchars($row['region']); ?></td>
+          <td><?php echo (int)$row['totalevents']; ?></td>
+          <td><?php echo (int)$row['highimpactevents']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -362,10 +362,10 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($criticalRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-          <td><?php echo (int)$row['DownstreamCount']; ?></td>
-          <td><?php echo (int)$row['HighImpactCount']; ?></td>
-          <td><?php echo (int)$row['Criticality']; ?></td>
+          <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+          <td><?php echo (int)$row['downstreamcount']; ?></td>
+          <td><?php echo (int)$row['highimpactcount']; ?></td>
+          <td><?php echo (int)$row['criticality']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -384,9 +384,9 @@ while ($row = $stmt->fetch()) {
       <select name="event_id">
         <option value="">-- choose event --</option>
         <?php foreach ($eventList as $e): ?>
-          <option value="<?php echo (int)$e['EventID']; ?>"
-            <?php if ($selectedEventID == (int)$e['EventID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($e['EventID'] . " | " . $e['EventDate'] . " | " . $e['CategoryName']); ?>
+          <option value="<?php echo (int)$e['eventid']; ?>"
+            <?php if ($selectedEventID == (int)$e['eventid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($e['eventid'] . " | " . $e['eventdate'] . " | " . $e['categoryname']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -409,11 +409,11 @@ while ($row = $stmt->fetch()) {
       <tbody>
         <?php foreach ($affectedRows as $row): ?>
           <tr>
-            <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-            <td><?php echo htmlspecialchars($row['Type']); ?></td>
-            <td><?php echo htmlspecialchars($row['Region']); ?></td>
-            <td><?php echo htmlspecialchars($row['City']); ?></td>
-            <td><?php echo htmlspecialchars($row['ImpactLevel']); ?></td>
+            <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+            <td><?php echo htmlspecialchars($row['type']); ?></td>
+            <td><?php echo htmlspecialchars($row['region']); ?></td>
+            <td><?php echo htmlspecialchars($row['city']); ?></td>
+            <td><?php echo htmlspecialchars($row['impactlevel']); ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -434,9 +434,9 @@ while ($row = $stmt->fetch()) {
       <select name="company_id">
         <option value="">-- choose company --</option>
         <?php foreach ($companyList as $c): ?>
-          <option value="<?php echo (int)$c['CompanyID']; ?>"
-            <?php if ($selectedCompanyID == (int)$c['CompanyID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($c['CompanyName']); ?>
+          <option value="<?php echo (int)$c['companyid']; ?>"
+            <?php if ($selectedCompanyID == (int)$c['companyid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($c['companyname']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -459,12 +459,12 @@ while ($row = $stmt->fetch()) {
       <tbody>
         <?php foreach ($companyDisruptionRows as $row): ?>
           <tr>
-            <td><?php echo (int)$row['EventID']; ?></td>
-            <td><?php echo htmlspecialchars($row['EventDate']); ?></td>
-            <td><?php echo htmlspecialchars($row['EventRecoveryDate']); ?></td>
-            <td><?php echo htmlspecialchars($row['CategoryName']); ?></td>
-            <td><?php echo htmlspecialchars($row['ImpactLevel']); ?></td>
-            <td><?php echo (int)$row['RecoveryDays']; ?></td>
+            <td><?php echo (int)$row['eventid']; ?></td>
+            <td><?php echo htmlspecialchars($row['eventdate']); ?></td>
+            <td><?php echo htmlspecialchars($row['eventrecoverydate']); ?></td>
+            <td><?php echo htmlspecialchars($row['categoryname']); ?></td>
+            <td><?php echo htmlspecialchars($row['impactlevel']); ?></td>
+            <td><?php echo (int)$row['recoverydays']; ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -491,10 +491,10 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($recoveryRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['Region']); ?></td>
-          <td><?php echo htmlspecialchars($row['CategoryName']); ?></td>
-          <td><?php echo number_format($row['AvgRecoveryDays'], 2); ?></td>
-          <td><?php echo (int)$row['NumEvents']; ?></td>
+          <td><?php echo htmlspecialchars($row['region']); ?></td>
+          <td><?php echo htmlspecialchars($row['categoryname']); ?></td>
+          <td><?php echo number_format($row['avgrecoverydays'], 2); ?></td>
+          <td><?php echo (int)$row['numevents']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -551,9 +551,9 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($categoryRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CategoryName']); ?></td>
+          <td><?php echo htmlspecialchars($row['categoryname']); ?></td>
           <td><?php echo (int)$row['Count']; ?></td>
-          <td><?php echo number_format($row['AvgRecoveryDays'], 1); ?></td>
+          <td><?php echo number_format($row['avgrecoverydays'], 1); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -607,7 +607,7 @@ while ($row = $stmt->fetch()) {
         <tr>
           <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
           <td><?php echo (int)$row['DisruptionCount']; ?></td>
-          <td><?php echo (int)$row['HighImpactCount']; ?></td>
+          <td><?php echo (int)$row['highimpactcount']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -631,9 +631,9 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('regionalChart');
     if (!ctx || !regionalData) return;
 
-    const labels = regionalData.map(r => r.Region);
-    const total  = regionalData.map(r => Number(r.TotalEvents));
-    const high   = regionalData.map(r => Number(r.HighImpactEvents));
+    const labels = regionalData.map(r => r.region);
+    const total  = regionalData.map(r => Number(r.totalevents));
+    const high   = regionalData.map(r => Number(r.highimpactevents));
 
     new Chart(ctx, {
       type: 'bar',
@@ -667,8 +667,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('criticalChart');
     if (!ctx || !criticalData) return;
 
-    const labels = criticalData.map(r => r.CompanyName);
-    const values = criticalData.map(r => Number(r.Criticality));
+    const labels = criticalData.map(r => r.companyname);
+    const values = criticalData.map(r => Number(r.criticality));
 
     new Chart(ctx, {
       type: 'bar',
@@ -692,8 +692,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('exposureChart');
     if (!ctx || !exposureData) return;
 
-    const labels = exposureData.map(r => r.Region);
-    const values = exposureData.map(r => Number(r.DisruptionExposure));
+    const labels = exposureData.map(r => r.region);
+    const values = exposureData.map(r => Number(r.disruptionexposure));
 
     new Chart(ctx, {
       type: 'bar',
@@ -718,8 +718,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('categoryChart');
     if (!ctx || !categoryData) return;
 
-    const labels = categoryData.map(r => r.CategoryName);
-    const values = categoryData.map(r => Number(r.Count));
+    const labels = categoryData.map(r => r.categoryname);
+    const values = categoryData.map(r => Number(r.count));
 
     new Chart(ctx, {
       type: 'bar',
@@ -744,8 +744,8 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('impactChart');
     if (!ctx || !impactData) return;
 
-    const labels = impactData.map(r => r.ImpactLevel);
-    const values = impactData.map(r => Number(r.Count));
+    const labels = impactData.map(r => r.impactlevel);
+    const values = impactData.map(r => Number(r.count));
 
     new Chart(ctx, {
       type: 'bar',
@@ -774,9 +774,9 @@ while ($row = $stmt->fetch()) {
     const ctx = document.getElementById('affectedChart');
     if (!ctx || !affectedData) return;
 
-    const labels = affectedData.map(r => r.CompanyName);
-    const total = affectedData.map(r => Number(r.DisruptionCount));
-    const high = affectedData.map(r => Number(r.HighImpactCount));
+    const labels = affectedData.map(r => r.companyname);
+    const total = affectedData.map(r => Number(r.disruptioncount));
+    const high = affectedData.map(r => Number(r.highimpactcount));
 
     new Chart(ctx, {
       type: 'bar',

@@ -213,11 +213,11 @@ foreach ($stmt->fetchAll() as $row) {
     <tbody>
       <?php foreach ($healthByCompanyRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-          <td><?php echo htmlspecialchars($row['Type']); ?></td>
-          <td><?php echo htmlspecialchars($row['Region']); ?></td>
-          <td><?php echo htmlspecialchars($row['City']); ?></td>
-          <td><?php echo number_format($row['AvgHealthScore'], 2); ?></td>
+          <td><?php echo htmlspecialchars($row['companyname']); ?></td>
+          <td><?php echo htmlspecialchars($row['type']); ?></td>
+          <td><?php echo htmlspecialchars($row['region']); ?></td>
+          <td><?php echo htmlspecialchars($row['city']); ?></td>
+          <td><?php echo number_format($row['avghealthscore'], 2); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -239,8 +239,8 @@ foreach ($stmt->fetchAll() as $row) {
     <tbody>
       <?php foreach ($byTypeRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['Type']); ?></td>
-          <td><?php echo number_format($row['AvgHealthScore'], 2); ?></td>
+          <td><?php echo htmlspecialchars($row['type']); ?></td>
+          <td><?php echo number_format($row['avghealthscore'], 2); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -263,9 +263,9 @@ foreach ($stmt->fetchAll() as $row) {
     <tbody>
       <?php foreach ($regionRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['Region']); ?></td>
-          <td><?php echo number_format($row['AvgHealthScore'], 2); ?></td>
-          <td><?php echo (int)$row['NumCompanies']; ?></td>
+          <td><?php echo htmlspecialchars($row['region']); ?></td>
+          <td><?php echo number_format($row['avghealthscore'], 2); ?></td>
+          <td><?php echo (int)$row['numcompanies']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -283,9 +283,9 @@ foreach ($stmt->fetchAll() as $row) {
       <select name="company_id">
         <option value="">-- choose --</option>
         <?php foreach ($companyList as $c): ?>
-          <option value="<?php echo (int)$c['CompanyID']; ?>"
-            <?php if ($selectedCompanyID == (int)$c['CompanyID']) echo 'selected'; ?>>
-            <?php echo htmlspecialchars($c['CompanyName']); ?>
+          <option value="<?php echo (int)$c['companyid']; ?>"
+            <?php if ($selectedCompanyID == (int)$c['companyid']) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($c['companyname']); ?>
           </option>
         <?php endforeach; ?>
       </select>
@@ -308,9 +308,9 @@ foreach ($stmt->fetchAll() as $row) {
       <tbody>
         <?php foreach ($companyDetailRows as $row): ?>
           <tr>
-            <td><?php echo htmlspecialchars($row['RepYear']); ?></td>
-            <td><?php echo htmlspecialchars($row['Quarter']); ?></td>
-            <td><?php echo number_format($row['HealthScore'], 2); ?></td>
+            <td><?php echo htmlspecialchars($row['repyear']); ?></td>
+            <td><?php echo htmlspecialchars($row['quarter']); ?></td>
+            <td><?php echo number_format($row['healthscore'], 2); ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -338,9 +338,9 @@ foreach ($stmt->fetchAll() as $row) {
     <tbody>
       <?php foreach ($disruptionRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['MonthStart']); ?></td>
-          <td><?php echo (int)$row['TotalEvents']; ?></td>
-          <td><?php echo (int)$row['HighImpactEvents']; ?></td>
+          <td><?php echo htmlspecialchars($row['monthstart']); ?></td>
+          <td><?php echo (int)$row['totalevents']; ?></td>
+          <td><?php echo (int)$row['highimpactevents']; ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -365,8 +365,8 @@ foreach ($stmt->fetchAll() as $row) {
 
     const topN = 10;
     const sliced = healthByCompanyData.slice(0, topN);
-    const labels = sliced.map(r => r.CompanyName);
-    const values = sliced.map(r => Number(r.AvgHealthScore));
+    const labels = sliced.map(r => r.companyname);
+    const values = sliced.map(r => Number(r.avghealthscore));
 
     new Chart(ctx, {
       type: 'bar',
@@ -390,8 +390,8 @@ foreach ($stmt->fetchAll() as $row) {
     const ctx = document.getElementById('byTypeChart');
     if (!ctx || !byTypeData) return;
 
-    const labels = byTypeData.map(r => r.Type);
-    const values = byTypeData.map(r => Number(r.AvgHealthScore));
+    const labels = byTypeData.map(r => r.type);
+    const values = byTypeData.map(r => Number(r.avghealthscore));
 
     new Chart(ctx, {
       type: 'bar',
@@ -415,8 +415,8 @@ foreach ($stmt->fetchAll() as $row) {
     const ctx = document.getElementById('companyDetailChart');
     if (!ctx || !companyDetailData || companyDetailData.length === 0) return;
 
-    const labels = companyDetailData.map(r => r.RepYear + ' Q' + r.Quarter);
-    const values = companyDetailData.map(r => Number(r.HealthScore));
+    const labels = companyDetailData.map(r => r.repyear + ' Q' + r.quarter);
+    const values = companyDetailData.map(r => Number(r.healthscore));
 
     new Chart(ctx, {
       type: 'line',
@@ -441,9 +441,9 @@ foreach ($stmt->fetchAll() as $row) {
     const ctx = document.getElementById('disruptionChart');
     if (!ctx || !disruptionData) return;
 
-    const labels = disruptionData.map(r => r.MonthStart);
-    const totalValues = disruptionData.map(r => Number(r.TotalEvents));
-    const highValues  = disruptionData.map(r => Number(r.HighImpactEvents));
+    const labels = disruptionData.map(r => r.monthstart);
+    const totalValues = disruptionData.map(r => Number(r.totalevents));
+    const highValues  = disruptionData.map(r => Number(r.highimpactevents));
 
     new Chart(ctx, {
       type: 'line',
