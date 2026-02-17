@@ -605,9 +605,9 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($topAffectedRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['CompanyName']); ?></td>
-          <td><?php echo (int)$row['DisruptionCount']; ?></td>
-          <td><?php echo (int)$row['highimpactcount']; ?></td>
+          <td><?php echo htmlspecialchars($row['companyname'] ?? ''); ?></td>
+          <td><?php echo (int)($row['disruptioncount'] ?? 0); ?></td>
+          <td><?php echo (int)($row['highimpactcount'] ?? 0); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

@@ -408,6 +408,7 @@ if ($unionSql !== '') {
             SUM(CASE WHEN base.TransType IN ('Shipping','Receiving') AND base.DelayDays IS NOT NULL AND base.DelayDays <= 0 THEN 1 ELSE 0 END) AS OnTimeCount,
             SUM(CASE WHEN base.TransType IN ('Shipping','Receiving') AND base.Status = 'Delayed' THEN 1 ELSE 0 END) AS DelayedCount
         $fromUnion
+        $statusWhere
     ";
     $stmt = $conn->prepare($sqlPerformance);
     $stmt->execute($params_union);

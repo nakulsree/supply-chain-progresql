@@ -198,7 +198,7 @@ if ($distinctProducts > 0 && $totalProductQty > 0) {
 
 // sort products alphabetically
 usort($productRows, function($a, $b) {
-    return strcmp($a['ProductName'], $b['ProductName']);
+    return strcmp($a['productname'] ?? '', $b['productname'] ?? '');
 });
 
 // get dropdown options
