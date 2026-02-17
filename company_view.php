@@ -457,7 +457,7 @@ while ($row = $stmt->fetch()) {
     $status       = ($recoveryDate === null || $recoveryDate === '0000-00-00') ? 'Ongoing' : 'Resolved';
     $recoveryTime = null;
     if ($recoveryDate && $recoveryDate !== '0000-00-00') {
-        $sqlDays = "SELECT EXTRACT(DAY FROM (?::DATE - ?::DATE))::INT AS Days";
+        $sqlDays = "SELECT EXTRACT(DAY FROM (?::TIMESTAMP - ?::TIMESTAMP))::INT AS Days";
         $stmt2 = $conn->prepare($sqlDays);
         $stmt2->execute([$recoveryDate, $eventDate]);
         $tmp = $stmt2->fetch();

@@ -522,10 +522,10 @@ while ($row = $stmt->fetch()) {
     <tbody>
       <?php foreach ($exposureRows as $row): ?>
         <tr>
-          <td><?php echo htmlspecialchars($row['Region']); ?></td>
-          <td><?php echo (int)$row['TotalDisruptions']; ?></td>
-          <td><?php echo (int)$row['HighImpactCount']; ?></td>
-          <td><?php echo (int)$row['DisruptionExposure']; ?></td>
+          <td><?php echo htmlspecialchars($row['region'] ?? ''); ?></td>
+          <td><?php echo (int)($row['totaldisruptions'] ?? 0); ?></td>
+          <td><?php echo (int)($row['highimpactcount'] ?? 0); ?></td>
+          <td><?php echo (int)($row['disruptionexposure'] ?? 0); ?></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
