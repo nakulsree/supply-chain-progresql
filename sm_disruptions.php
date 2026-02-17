@@ -146,7 +146,7 @@ if ($selectedCompanyID > 0) {
         de.EventRecoveryDate,
         dc.CategoryName,
         ic.ImpactLevel,
-        EXTRACT(DAY FROM (de.EventRecoveryDate - de.EventDate)) AS RecoveryDays
+        EXTRACT(DAY FROM (de.EventRecoveryDate::timestamp - de.EventDate::timestamp)) AS RecoveryDays
     FROM ImpactsCompany ic
     JOIN DisruptionEvent de
         ON ic.EventID = de.EventID
@@ -171,7 +171,7 @@ $sqlRecovery = "
 SELECT 
     l.ContinentName AS Region,
     dc.CategoryName,
-    AVG(EXTRACT(DAY FROM (de.EventRecoveryDate - de.EventDate))) AS AvgRecoveryDays,
+    AVG(EXTRACT(DAY FROM (de.EventRecoveryDate::timestamp - de.EventDate::timestamp))) AS AvgRecoveryDays,
     COUNT(DISTINCT de.EventID) AS NumEvents
 FROM DisruptionEvent de
 JOIN DisruptionCategory dc
@@ -225,7 +225,7 @@ $sqlCategory = "
 SELECT 
     dc.CategoryName,
     COUNT(DISTINCT de.EventID) AS Count,
-    AVG(EXTRACT(DAY FROM (de.EventRecoveryDate - de.EventDate))) AS AvgRecoveryDays
+    AVG(EXTRACT(DAY FROM (de.EventRecoveryDate::timestamp - de.EventDate::timestamp))) AS AvgRecoveryDays
 FROM DisruptionEvent de
 JOIN DisruptionCategory dc ON de.CategoryID = dc.CategoryID
 WHERE de.EventDate BETWEEN ? AND ?

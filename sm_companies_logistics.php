@@ -172,7 +172,7 @@ $sqlDelay = "
 SELECT 
     d.CompanyID,
     c.CompanyName,
-    AVG(EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))) AS AvgDelay,
+    AVG(EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))) AS AvgDelay,
     COUNT(*) AS NumShipments,
     SUM(CASE WHEN s.ActualDate <= s.PromisedDate THEN 1 ELSE 0 END) AS OnTimeShipments,
     (100.0 * SUM(CASE WHEN s.ActualDate <= s.PromisedDate THEN 1 ELSE 0 END) / COUNT(*)) AS OnTimePercent

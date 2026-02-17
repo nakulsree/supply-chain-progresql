@@ -1,6 +1,6 @@
 -- PostgreSQL version of the supply chain database
 -- Create database
-CREATE DATABASE IF NOT EXISTS nsreekan;
+CREATE DATABASE nsreekan;
 
 -- Create ENUM types first
 CREATE TYPE role_enum AS ENUM('SupplyChainManager', 'SeniorManager');

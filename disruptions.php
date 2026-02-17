@@ -97,7 +97,7 @@ while ($row = $stmt->fetch()) {
 
 // QUERY 2: average recovery time - get all disruptions and calculate how many days recovery took
 // only includes disruptions that have been recovered (EventRecoveryDate is not null)
-$sql = "SELECT EXTRACT(DAY FROM (de.EventRecoveryDate - de.EventDate)) as recovery_days
+$sql = "SELECT EXTRACT(DAY FROM (de.EventRecoveryDate::timestamp - de.EventDate::timestamp)) as recovery_days
          FROM DisruptionEvent de
          JOIN ImpactsCompany ic ON de.EventID = ic.EventID
          JOIN Company c ON ic.AffectedCompanyID = c.CompanyID
@@ -202,7 +202,7 @@ while ($row = $stmt->fetch()) {
 
 // QUERY 4: total downtime - SUM up all the days each company was down
 $sql = "SELECT c.CompanyName,
-         SUM(EXTRACT(DAY FROM (de.EventRecoveryDate - de.EventDate))) as total_downtime_days
+         SUM(EXTRACT(DAY FROM (de.EventRecoveryDate::timestamp - de.EventDate::timestamp))) as total_downtime_days
          FROM DisruptionEvent de
          JOIN ImpactsCompany ic ON de.EventID = ic.EventID
          JOIN Company c ON ic.AffectedCompanyID = c.CompanyID
@@ -342,7 +342,7 @@ $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 // populate the dsd_data array with counts from the query
 while ($row = $stmt->fetch()) {
-    $level = $row['ilevel'];
+    $level = $row['impactlevel'];
     $count = intval($row['severity_count']);
     if($level == 'Low') {
         $dsd_data['Low'] = $count;
@@ -402,7 +402,7 @@ $sql = "SELECT DISTINCT l.ContinentName FROM Location l ORDER BY l.ContinentName
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 while($r = $stmt->fetch()) {
-    $all_region_list[] = $r['ContinentName'];
+    $all_region_list[] = $r['continentname'];
 }
 
 $regions = $all_region_list;

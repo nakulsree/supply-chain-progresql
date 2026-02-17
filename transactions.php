@@ -108,8 +108,8 @@ if ($includeShipping) {
             s.PromisedDate AS PromisedDate,
             s.ActualDate AS DeliveryDate,
             CASE
-                WHEN s.ActualDate IS NOT NULL THEN EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))
-                WHEN s.ActualDate IS NULL AND CURRENT_DATE > s.PromisedDate THEN EXTRACT(DAY FROM (CURRENT_DATE - s.PromisedDate))
+                WHEN s.ActualDate IS NOT NULL THEN EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))
+                WHEN s.ActualDate IS NULL AND CURRENT_DATE > s.PromisedDate THEN EXTRACT(DAY FROM (CURRENT_DATE::timestamp - s.PromisedDate::timestamp))
                 ELSE NULL
             END AS DelayDays,
             $shippingStatusCase AS Status,
@@ -145,7 +145,7 @@ if ($includeReceiving) {
             r.QuantityReceived AS Quantity,
             s.PromisedDate AS PromisedDate,
             r.ReceivedDate AS DeliveryDate,
-            EXTRACT(DAY FROM (r.ReceivedDate - s.PromisedDate)) AS DelayDays,
+            EXTRACT(DAY FROM (r.ReceivedDate::timestamp - s.PromisedDate::timestamp)) AS DelayDays,
             CASE
                 WHEN r.ReceivedDate <= s.PromisedDate THEN 'Delivered'
                 WHEN r.ReceivedDate >  s.PromisedDate THEN 'Delayed'
@@ -414,7 +414,7 @@ if ($unionSql !== '') {
     $stmt->execute($params_union);
     $row = $stmt->fetch();
     if ($row) {
-        $deliveryPerformance['onTime'] = (int)$row['OnTimeCount'];
+        $deliveryPerformance['onTime'] = (int)$row['ontimecount'];
         $deliveryPerformance['delayed'] = (int)$row['delayedcount'];
     }
 
@@ -447,8 +447,8 @@ if ($unionSql !== '') {
     $stmt->execute([$startDate, $endDate]);
     $row = $stmt->fetch();
     if ($row) {
-        $highCount = (int)$row['HighCount'];
-        $totalCount = (int)$row['TotalCount'];
+        $highCount = (int)$row['highcount'];
+        $totalCount = (int)$row['totalcount'];
         $disruptionExposure = $totalCount + (2 * $highCount);
     }
 

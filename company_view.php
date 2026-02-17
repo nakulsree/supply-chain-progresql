@@ -379,8 +379,8 @@ SELECT
           ELSE 0
         END
     ) AS OnTimeCount,
-    AVG(EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))) AS AvgDelay,
-    STDDEV_SAMP(EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))) AS StdDelay
+    AVG(EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))) AS AvgDelay,
+    STDDEV_SAMP(EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))) AS StdDelay
 FROM Shipping s
 WHERE s.SourceCompanyID = ?
   AND s.PromisedDate BETWEEN ? AND ?
@@ -397,13 +397,13 @@ $stdDelay = $row['stddelay'];
 
 $sqlDelayHist = "
 SELECT 
-    EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))::INT AS DelayDays,
+    EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))::INT AS DelayDays,
     COUNT(*) AS Cnt
 FROM Shipping s
 WHERE s.SourceCompanyID = ?
   AND s.PromisedDate BETWEEN ? AND ?
   AND s.ActualDate IS NOT NULL
-GROUP BY EXTRACT(DAY FROM (s.ActualDate - s.PromisedDate))
+GROUP BY EXTRACT(DAY FROM (s.ActualDate::timestamp - s.PromisedDate::timestamp))
 ORDER BY DelayDays
 ";
 $stmt = $conn->prepare($sqlDelayHist);
